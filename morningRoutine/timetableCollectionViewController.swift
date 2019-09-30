@@ -15,6 +15,7 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
     let date = Date()
     let calendar = Calendar.current
    
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,23 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
         let hour = calendar.component(.hour, from: date)
         let minutes = calendar.component(.minute, from: date)
 
+      //  let imageView = UIImageView(image: #imageLiteral(resourceName: "image.png")) // This would be your mapView, here I am just using a random image
+        
+     //   let newFrame = view.frame.
+        let lineView = LineView(frame: CGRect( x: 0, y: 200, width: view.frame.size.width, height: view.frame.size.height ) )
+        
+//        NSLayoutConstraint.activate(
+//            [
+//                //lineView.centerXAnchor.constraint(equalTo: view.margins.centerXAnchor),
+//             //  lineView.heightAnchor.constraint(equalTo: margins.widthAnchor, multiplier: 163/545),
+//                lineView.topAnchor.constraint(equalTo
+//            ]
+//        )
+
+        view.addSubview(lineView)
+        
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -57,8 +75,8 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         let width = (self.view.frame.size.width) / 8//some width
-        let height = (self.view.frame.size.height) / 16
+         let width = (self.view.frame.size.height) / 7//some width
+        let height = (self.view.frame.size.width) / 18
                return CGSize(width: width, height: height)
     }
 
@@ -178,4 +196,29 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
     }
     */
 
+}
+
+class LineView : UIView {
+
+    var position = 0.0
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.init(white: 0.0, alpha: 0.0)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func draw(_ rect: CGRect) {
+        if let context = UIGraphicsGetCurrentContext() {
+            context.setStrokeColor(UIColor.black.cgColor)
+            context.setLineWidth(10)
+            context.beginPath()
+            context.move(to: CGPoint(x: 0.0, y: 00.0)) // This would be oldX, oldY
+            context.addLine(to: CGPoint(x: 1500.0, y: 0.0)) // This would be newX, newY
+            context.strokePath()
+        }
+    }
 }
