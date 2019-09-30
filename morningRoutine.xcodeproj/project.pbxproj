@@ -7,23 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44943F46234216DD005C70F5 /* GoogleService-Info-3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44943F45234216DD005C70F5 /* GoogleService-Info-3.plist */; };
 		449EE1ED233CE9D9007134AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449EE1EC233CE9D9007134AA /* AppDelegate.swift */; };
 		449EE1EF233CE9D9007134AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449EE1EE233CE9D9007134AA /* SceneDelegate.swift */; };
-		449EE1F1233CE9D9007134AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449EE1F0233CE9D9007134AA /* ViewController.swift */; };
 		449EE1F4233CE9D9007134AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 449EE1F2233CE9D9007134AA /* Main.storyboard */; };
 		449EE1F6233CE9DA007134AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 449EE1F5233CE9DA007134AA /* Assets.xcassets */; };
 		449EE1F9233CE9DA007134AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 449EE1F7233CE9DA007134AA /* LaunchScreen.storyboard */; };
+		449EE201233CEA09007134AA /* timetableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449EE200233CEA09007134AA /* timetableCollectionViewCell.swift */; };
+		449EE203233CEA4A007134AA /* timetableCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449EE202233CEA4A007134AA /* timetableCollectionViewController.swift */; };
+		449EE226233CFCCB007134AA /* funny.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 449EE225233CFCCB007134AA /* funny.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		44943F45234216DD005C70F5 /* GoogleService-Info-3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-3.plist"; sourceTree = "<group>"; };
 		449EE1E9233CE9D9007134AA /* morningRoutine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = morningRoutine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		449EE1EC233CE9D9007134AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		449EE1EE233CE9D9007134AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		449EE1F0233CE9D9007134AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		449EE1F3233CE9D9007134AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		449EE1F5233CE9DA007134AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		449EE1F8233CE9DA007134AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		449EE1FA233CE9DA007134AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		449EE200233CEA09007134AA /* timetableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timetableCollectionViewCell.swift; sourceTree = "<group>"; };
+		449EE202233CEA4A007134AA /* timetableCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timetableCollectionViewController.swift; sourceTree = "<group>"; };
+		449EE224233CFC8B007134AA /* Unknown-4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Unknown-4"; sourceTree = "<group>"; };
+		449EE225233CFCCB007134AA /* funny.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = funny.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +65,15 @@
 			children = (
 				449EE1EC233CE9D9007134AA /* AppDelegate.swift */,
 				449EE1EE233CE9D9007134AA /* SceneDelegate.swift */,
-				449EE1F0233CE9D9007134AA /* ViewController.swift */,
 				449EE1F2233CE9D9007134AA /* Main.storyboard */,
+				449EE200233CEA09007134AA /* timetableCollectionViewCell.swift */,
+				449EE202233CEA4A007134AA /* timetableCollectionViewController.swift */,
 				449EE1F5233CE9DA007134AA /* Assets.xcassets */,
+				449EE225233CFCCB007134AA /* funny.jpg */,
+				449EE224233CFC8B007134AA /* Unknown-4 */,
 				449EE1F7233CE9DA007134AA /* LaunchScreen.storyboard */,
 				449EE1FA233CE9DA007134AA /* Info.plist */,
+				44943F45234216DD005C70F5 /* GoogleService-Info-3.plist */,
 			);
 			path = morningRoutine;
 			sourceTree = "<group>";
@@ -125,9 +136,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				449EE226233CFCCB007134AA /* funny.jpg in Resources */,
 				449EE1F9233CE9DA007134AA /* LaunchScreen.storyboard in Resources */,
 				449EE1F6233CE9DA007134AA /* Assets.xcassets in Resources */,
 				449EE1F4233CE9D9007134AA /* Main.storyboard in Resources */,
+				44943F46234216DD005C70F5 /* GoogleService-Info-3.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,8 +151,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				449EE1F1233CE9D9007134AA /* ViewController.swift in Sources */,
 				449EE1ED233CE9D9007134AA /* AppDelegate.swift in Sources */,
+				449EE201233CEA09007134AA /* timetableCollectionViewCell.swift in Sources */,
+				449EE203233CEA4A007134AA /* timetableCollectionViewController.swift in Sources */,
 				449EE1EF233CE9D9007134AA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,7 +299,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2E5MDC86ME;
 				INFOPLIST_FILE = morningRoutine/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,7 +318,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2E5MDC86ME;
 				INFOPLIST_FILE = morningRoutine/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
