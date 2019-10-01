@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Vac-r9-x3n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sTP-Fn-YTb">
     <device id="ipad10_5" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +12,7 @@
         <scene sceneID="Xl3-5A-0ap">
             <objects>
                 <collectionViewController id="Vac-r9-x3n" customClass="timetableCollectionViewController" customModule="morningRoutine" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jTr-y5-HTh">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="jTr-y5-HTh">
                         <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -29,12 +30,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhU-gp-9d9">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hhU-gp-9d9">
                                             <rect key="frame" x="4" y="14.5" width="42" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="kH3-AG-Ifo"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -57,26 +58,45 @@
                             <outlet property="delegate" destination="Vac-r9-x3n" id="fUy-VF-NfO"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" id="v99-bz-8ka"/>
                     <connections>
-                        <segue destination="s4s-Mo-ErR" kind="presentation" identifier="leave" id="tZR-dx-DTt"/>
+                        <segue destination="s4s-Mo-ErR" kind="show" identifier="list" id="BWe-AD-Aud"/>
+                        <segue destination="xjg-sj-9zz" kind="show" identifier="leave" id="VFN-iL-zQo"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qzq-FR-2kK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-223.18840579710147" y="-67.633928571428569"/>
+            <point key="canvasLocation" x="-453" y="-619"/>
         </scene>
-        <!--View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="ZPJ-Tj-zfQ">
+            <objects>
+                <navigationController id="sTP-Fn-YTb" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="eYO-uh-VSp"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="P8b-VM-6GI">
+                        <rect key="frame" x="0.0" y="0.0" width="1112" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Vac-r9-x3n" kind="relationship" relationship="rootViewController" id="RYr-IF-AbA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FGE-iZ-doH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1376" y="-53"/>
+        </scene>
+        <!--Packing List View Controller-->
         <scene sceneID="aLw-vD-b0W">
             <objects>
-                <viewController id="s4s-Mo-ErR" sceneMemberID="viewController">
+                <viewController id="s4s-Mo-ErR" customClass="packingListViewController" customModule="morningRoutine" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jgH-8B-hoQ">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="794"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="M2h-cU-6ba">
-                                <rect key="frame" x="0.0" y="0.0" width="712" height="794"/>
+                                <rect key="frame" x="0.0" y="50" width="1112" height="784"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <string key="text">Lenny Morning List
+                                <string key="text">Morning List
 &gt; Breakfast
 &gt; dressed (tie, blazer)
 &gt; charged phone in blazer
@@ -85,26 +105,12 @@
 &gt; hometime plans
 &gt; check bag
 &gt; teeth and hair
-&gt; listening program
 &gt;make bed
-&gt; laundry
-&gt; meal deal money</string>
+&gt; lunch</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u64-Yy-jlg">
-                                <rect key="frame" x="135" y="510" width="443" height="216"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="I Have It All!">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <segue destination="xjg-sj-9zz" kind="presentation" id="ct4-KA-uOM"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -115,21 +121,22 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="g5N-aF-9Kf"/>
                     </view>
+                    <navigationItem key="navigationItem" id="tvN-ox-DaJ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9FJ-SW-Qdc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="543.88489208633098" y="-69.06474820143886"/>
+            <point key="canvasLocation" x="518" y="-619"/>
         </scene>
-        <!--View Controller-->
+        <!--Funny Animal View Controller-->
         <scene sceneID="Qnw-c0-Ffi">
             <objects>
-                <viewController id="xjg-sj-9zz" sceneMemberID="viewController">
+                <viewController id="xjg-sj-9zz" customClass="funnyAnimalViewController" customModule="morningRoutine" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LGw-oq-5rC">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="794"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="funny.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="TaR-HL-Rfh">
-                                <rect key="frame" x="0.0" y="0.0" width="712" height="794"/>
+                                <rect key="frame" x="0.0" y="50" width="1112" height="784"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -141,10 +148,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="a2n-Fc-Xhm"/>
                     </view>
+                    <navigationItem key="navigationItem" id="XYZ-W8-okh"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zX6-q2-GBg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="648" y="598"/>
+            <point key="canvasLocation" x="394" y="737"/>
         </scene>
     </scenes>
     <resources>

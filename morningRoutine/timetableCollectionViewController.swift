@@ -10,43 +10,45 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
+let testing = true
+
 class timetableCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let date = Date()
-    let calendar = Calendar.current
-   
-   
+    var taskMatrix = Array(repeating: Array(repeating: (false, taskStatus.Open), count: 14), count: 13)
+
+    var startingPoint : Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let hour = calendar.component(.hour, from: date)
-        let minutes = calendar.component(.minute, from: date)
-
-      //  let imageView = UIImageView(image: #imageLiteral(resourceName: "image.png")) // This would be your mapView, here I am just using a random image
+       // print(getDateFromHour(hour: 20))
         
-     //   let newFrame = view.frame.
-        let lineView = LineView(frame: CGRect( x: 0, y: 200, width: view.frame.size.width, height: view.frame.size.height ) )
+        if testing == true{
+              //startingPoint = DispatchTime.now()
+            startingPoint = Date()
+          }
+        else{
+            startingPoint = getDateFromHour(hour: 10)
+        }
+       // let hour = calendar.component(.hour, from: date)
+       // let minutes = calendar.component(.minute, from: date)
         
-//        NSLayoutConstraint.activate(
-//            [
-//                //lineView.centerXAnchor.constraint(equalTo: view.margins.centerXAnchor),
-//             //  lineView.heightAnchor.constraint(equalTo: margins.widthAnchor, multiplier: 163/545),
-//                lineView.topAnchor.constraint(equalTo
-//            ]
-//        )
 
+
+        let lineView = LineView(frame: CGRect( x: 0, y: view.frame.size.height/13, width: 10, height: 10) )
+       // self.view.frame.width
+
+        //print(taskMatrix)
         view.addSubview(lineView)
         
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-       // self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        /// in the real thing I'd need to figure out the current time > status matrix at the point the app is launched
+        if testing == true
+        {
+            Timer.scheduledTimer(timeInterval: 1, target: self, selector: "updateLine", userInfo: nil, repeats: true)
+        }
+        else{
+            Timer.scheduledTimer(timeInterval: 60, target: self, selector: "updateLine", userInfo: nil, repeats: true)
+        }
     }
 
     /*
@@ -69,13 +71,13 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 7
+        return 14
     }
     
 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         let width = (self.view.frame.size.height) / 7//some width
+         let width = (self.view.frame.size.height) / 15//some width
         let height = (self.view.frame.size.width) / 18
                return CGSize(width: width, height: height)
     }
@@ -84,20 +86,6 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! timetableCollectionViewCell
         cell.backgroundColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
         cell.label.text = " "
-        
-        if indexPath.section == 0{
-            cell.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
-            //if indexPath.row == 1 {}
-            switch indexPath.row {
-                case 1: cell.label.text = "Mum"
-                case 2: cell.label.text = "Xenia"
-                case 3: cell.label.text = "Peter"
-                case 4: cell.label.text = "Lenny"
-                case 5: cell.label.text = "Marina"
-                case 6: cell.label.text = "Cassie"
-                default: cell.label.text = "Name"
-            }
-        }
         
         if indexPath.row == 0{
             cell.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
@@ -118,44 +106,393 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
                 default: cell.label.text = "Name"
             }
         }
+        if indexPath.row == 2{
+                if taskMatrix[indexPath.section][2].1 == taskStatus.Open
+                {
+                       cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                }
+                else
+                {
+                        cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+                }
+                       //if indexPath.row == 1 {}
+                       switch indexPath.section {
+                           case 1: cell.label.text = "Make Porridge"
+                           case 2: cell.label.text = "Feed"
+                           case 3: cell.label.text = "Feed"
+                           case 4: cell.label.text = "Pack"
+                           case 5: cell.label.text = "Dress"
+                           case 6: cell.label.text = "Drive Xen"
+                           case 7: cell.label.text = "Drive Xen"
+                           case 8: cell.label.text = "Support Boys"
+                           case 9: cell.label.text = "End Food"
+                           case 10: cell.label.text = "Dress girls"
+                           case 11: cell.label.text = "Hair&Book"
+                           case 12: cell.label.text = "Leave"
+                           default: cell.label.text = "Adult"
+                            cell.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+                       }
+                   }
         
         if indexPath.row == 4{
+        if taskMatrix[indexPath.section][4].1 == taskStatus.Open
+        {
+               cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        }
+        else
+        {
+                cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+        }
+               //if indexPath.row == 1 {}
+               switch indexPath.section {
+                   case 1: cell.label.text = " "
+                   case 2: cell.label.text = " "
+                   case 3: cell.label.text = "Wake"
+                   case 4: cell.label.text = "Pack"
+                   case 5: cell.label.text = "Eat"
+                   case 6: cell.label.text = "Leave"
+                   case 7: cell.label.text = " "
+                   case 8: cell.label.text = " "
+                   case 9: cell.label.text = " "
+                   case 10: cell.label.text = " "
+                   case 11: cell.label.text = " "
+                   case 12: cell.label.text = " "
+                   default: cell.label.text = "Xenia"
+                    cell.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+               }
+           }
+        
+        if indexPath.row == 5{
+            if taskMatrix[indexPath.section][5].1 == taskStatus.Open
+            {
                    cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+            }
+            else
+            {
+                    cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+            }
+                   //if indexPath.row == 1 {}
+                   switch indexPath.section {
+                       case 1: cell.label.text = " "
+                       case 2: cell.label.text = " "
+                       case 3: cell.label.text = " "
+                       case 4: cell.label.text = " "
+                       case 5: cell.label.text = " "
+                       case 6: cell.label.text = " "
+                       case 7: cell.label.text = " "
+                       case 8: cell.label.text = " "
+                       case 9: cell.label.text = " "
+                       case 10: cell.label.text = " "
+                       case 11: cell.label.text = " "
+                       case 12: cell.label.text = " "
+                       default: cell.label.text = "Xenia"
+                        cell.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+                   }
+               }
+            
+        
+        if indexPath.row == 6{
+                if taskMatrix[indexPath.section][6].1 == taskStatus.Open
+                {
+                       cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                }
+                else
+                {
+                        cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+                }
+                       //if indexPath.row == 1 {}
+                       switch indexPath.section {
+                           case 1: cell.label.text = "Wake Up"
+                           case 2: cell.label.text = "Eat"
+                           case 3: cell.label.text = "Eat"
+                           case 4: cell.label.text = "Piano"
+                           case 5: cell.label.text = "Piano"
+                           case 6: cell.label.text = "Get Ready"
+                           case 7: cell.label.text = "Breathe"
+                           case 8: cell.label.text = "Leave"
+                           case 9: cell.label.text = " "
+                           case 10: cell.label.text = " "
+                           case 11: cell.label.text = " "
+                           case 12: cell.label.text = " "
+                           default: cell.label.text = "Peter"
+                            cell.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+                       }
+                   }
+        
+        if indexPath.row == 7{
+                     if taskMatrix[indexPath.section][7].1 == taskStatus.Open
+                     {
+                            cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                     }
+                     else
+                     {
+                             cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+                     }
+                            //if indexPath.row == 1 {}
+                            switch indexPath.section {
+                                case 1: cell.label.text = "Make Bed"
+                                case 2: cell.label.text = "Teeth"
+                                case 3: cell.label.text = "Pack Lunch"
+                                case 4: cell.label.text = " "
+                                case 5: cell.label.text = "Prayer"
+                                case 6: cell.label.text = " "
+                                case 7: cell.label.text = " "
+                                case 8: cell.label.text = " "
+                                case 9: cell.label.text = " "
+                                case 10: cell.label.text = " "
+                                case 11: cell.label.text = " "
+                                case 12: cell.label.text = " "
+                                default: cell.label.text = "Peter"
+                                 cell.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+                            }
+                        }
+        
+        if indexPath.row == 8{
+            if taskMatrix[indexPath.section][8].1 == taskStatus.Open
+            {
+                   cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+            }
+            else
+            {
+                    cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+            }
                    //if indexPath.row == 1 {}
                    switch indexPath.section {
                        case 1: cell.label.text = "Wake Up"
                        case 2: cell.label.text = "Eat"
                        case 3: cell.label.text = "Eat"
-                       case 4: cell.label.text = "Dressed and Clean"
-                       case 5: cell.label.text = "Packed and Ready"
+                       case 4: cell.label.text = "Dressed "
+                       case 5: cell.label.text = "Get Ready"
                        case 6: cell.label.text = "Piano"
-                       case 7: cell.label.text = "Listening Program"
+                       case 7: cell.label.text = "Front"
                        case 8: cell.label.text = "Leave"
                        case 9: cell.label.text = " "
                        case 10: cell.label.text = " "
                        case 11: cell.label.text = " "
                        case 12: cell.label.text = " "
                        default: cell.label.text = "Lenny"
-                        cell.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+                        cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
                    }
                }
         
-    
+        if indexPath.row == 9{
+            if taskMatrix[indexPath.section][9].1 == taskStatus.Open
+            {
+                   cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+            }
+            else
+            {
+                    cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+            }
+                   //if indexPath.row == 1 {}
+                   switch indexPath.section {
+                       case 1: cell.label.text = "Make Bed"
+                       case 2: cell.label.text = " "
+                       case 3: cell.label.text = " "
+                       case 4: cell.label.text = "Teeth & Hair"
+                       case 5: cell.label.text = " "
+                       case 6: cell.label.text = " "
+                       case 7: cell.label.text = " "
+                       case 8: cell.label.text = " "
+                       case 9: cell.label.text = " "
+                       case 10: cell.label.text = " "
+                       case 11: cell.label.text = " "
+                       case 12: cell.label.text = " "
+                       default: cell.label.text = "Lenny"
+                        cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+                   }
+               }
+        
+        if indexPath.row == 10{
+            if taskMatrix[indexPath.section][10].1 == taskStatus.Open
+            {
+                   cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+            }
+            else
+            {
+                    cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+            }
+                   //if indexPath.row == 1 {}
+                   switch indexPath.section {
+                       case 1: cell.label.text = " "
+                       case 2: cell.label.text = " "
+                       case 3: cell.label.text = " "
+                       case 4: cell.label.text = " "
+                       case 5: cell.label.text = " "
+                       case 6: cell.label.text = "Wake Up"
+                       case 7: cell.label.text = "Eat"
+                       case 8: cell.label.text = " Eat"
+                       case 9: cell.label.text = " Dress"
+                       case 10: cell.label.text = " Reading"
+                       case 11: cell.label.text = "Leave"
+                       case 12: cell.label.text = " "
+                       default: cell.label.text = "Marina"
+                        cell.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+                   }
+               }
+        
+        
+         if indexPath.row == 11{
+             if taskMatrix[indexPath.section][10].1 == taskStatus.Open
+             {
+                    cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+             }
+             else
+             {
+                     cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+             }
+                    //if indexPath.row == 1 {}
+                    switch indexPath.section {
+                        case 1: cell.label.text = " "
+                        case 2: cell.label.text = " "
+                        case 3: cell.label.text = " "
+                        case 4: cell.label.text = " "
+                        case 5: cell.label.text = " "
+                        case 6: cell.label.text = " "
+                        case 7: cell.label.text = " "
+                        case 8: cell.label.text = "Tidy Plate"
+                        case 9: cell.label.text = " Teeth&Hair"
+                        case 10: cell.label.text = "Tie and Jumper"
+                        case 11: cell.label.text = "Socks & shoes"
+                        case 12: cell.label.text = " "
+                        default: cell.label.text = "Marina"
+                         cell.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+                    }
+                }
+        
+        if indexPath.row == 12{
+                 if taskMatrix[indexPath.section][12].1 == taskStatus.Open
+                 {
+                        cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                 }
+                 else
+                 {
+                         cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+                 }
+                        //if indexPath.row == 1 {}
+                        switch indexPath.section {
+                            case 1: cell.label.text = " "
+                            case 2: cell.label.text = " "
+                            case 3: cell.label.text = " "
+                            case 4: cell.label.text = "Wake Up"
+                            case 5: cell.label.text = "Eat"
+                            case 6: cell.label.text = "Eat"
+                            case 7: cell.label.text = "Dress"
+                            case 8: cell.label.text = " Read"
+                            case 9: cell.label.text = " Teeth "
+                            case 10: cell.label.text = " Hair "
+                            case 11: cell.label.text = "Leave"
+                            case 12: cell.label.text = " "
+                            default: cell.label.text = "Cass"
+                             cell.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
+                        }
+                    }
+        
+        if indexPath.row == 13{
+                  if taskMatrix[indexPath.section][13].1 == taskStatus.Open
+                  {
+                         cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                  }
+                  else
+                  {
+                          cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+                  }
+                         //if indexPath.row == 1 {}
+                         switch indexPath.section {
+                             case 1: cell.label.text = " "
+                             case 2: cell.label.text = " "
+                             case 3: cell.label.text = " "
+                             case 4: cell.label.text = " "
+                             case 5: cell.label.text = " "
+                             case 6: cell.label.text = " "
+                             case 7: cell.label.text = " "
+                             case 8: cell.label.text = " "
+                             case 9: cell.label.text = " "
+                             case 10: cell.label.text = " "
+                             case 11: cell.label.text = " "
+                             case 12: cell.label.text = " "
+                             default: cell.label.text = "Cass"
+                              cell.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
+                         }
+                     }
+        
+        if cell.label.text == " " {
+            switch indexPath.row {
+            //case 1:
+           // case 2:
+           // case 3:
+                case 4:cell.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+                           case 5: cell.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+                           case 6: cell.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+                case 7: cell.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+                           case 8: cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+                           case 9: cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+                case 10:  cell.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+                           case 11:  cell.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+                           case 12: cell.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
+                case 13: cell.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
+            default: cell.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            }
+        }
+        
+        if taskMatrix[indexPath.section][indexPath.row].0 == true
+        {
+            if cell.backgroundColor ==  #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1){
+                cell.wobble()
+                //xcell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            }
+            else{
+                    //cell.alpha = 0.2
+                  cell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+                }
+        }
+//        if taskMatrix[indexPath.section][indexPath.row].0 == true  && cell.backgroundColor ==  #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1){
+//                    //cell.alpha = 0.2
+//                  cell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+//                }
+        
+        
+        if  taskMatrix[indexPath.section][indexPath.row].0 == true  && cell.backgroundColor ==  #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)  {
+                     //cell.alpha = 0.2
+        
+            //cell.alpha = 0.2
+          cell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        }
+        
+        var elapsedTime = -Int(  startingPoint!.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate)
+        
+        if indexPath.section < elapsedTime/(60*15) && cell.backgroundColor ==  #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        {
+            cell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        }
+          
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
       //  addToList.append(objectsArray[indexPath.row])
         let cell = collectionView.cellForItem(at: indexPath) as! timetableCollectionViewCell
+        print("selected", cell.label.text!)
         cell.layer.borderWidth = 2.0
         if cell.backgroundColor == #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         {
-            cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+            if taskMatrix[indexPath.section][indexPath.row].0 == false
+            {
+                cell.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+            }
+            else
+            {
+                cell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            }
+            cell.stopWobble()
+            taskMatrix[indexPath.section][indexPath.row].1 = taskStatus.Closed
         }
         else{
-            if cell.backgroundColor == #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+            if cell.backgroundColor ==  #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
             {
-                cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                cell.backgroundColor =  #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                
+                taskMatrix[indexPath.section][indexPath.row].1 = taskStatus.Open
             }
         }
         
@@ -163,38 +500,105 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
         {
             performSegue(withIdentifier: "leave", sender: self)
         }
+        
+        if cell.label.text == "Get Ready"
+        {
+            performSegue(withIdentifier: "list", sender: self)
+        }
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
+    
+    
+    // MARK: UICollectionViewDelegate
+    
+    /*
+     // Uncomment this method to specify if the specified item should be highlighted during tracking
+     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+     return true
+     }
+     */
+    
+    /*
+     // Uncomment this method to specify if the specified item should be selected
+     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+     return true
+     }
+     */
+    
+    /*
+     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
+     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+     return false
+     }
+     
+     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+     return false
+     }
+     
+     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+     
+     }
+     */
+    
+    //Update clock every second
+    @objc func updateLine() {
+        // let now = Date()
+      //  var elapsedTime =  Int( (DispatchTime.now().uptimeNanoseconds -  startingPoint!.uptimeNanoseconds)/1000000000 )
+        
+        var elapsedTime = -Int( startingPoint!.timeIntervalSince1970 - Date().timeIntervalSince1970 )
+      //  print(elapsedTime)
+        
+        // view.subvid
+        //let lineView = LineView(frame: CGRect( x: 0, y: 200, width: view.frame.size.width, height: view.frame.size.height ) )
+        //view.addSubview(lineView)
+        //
+        if testing == true
+        {
+            if elapsedTime < 12
+            {
+
+                let screenHeight = view.frame.size.height
+                    view.subviews[1].frame = CGRect( x: 0, y: (screenHeight * CGFloat(elapsedTime + 2) ) / 13, width: 1000, height: 10 )
+                
+
+                for itemsIndex in 0 ... 13{
+                    taskMatrix[elapsedTime ][itemsIndex].0 = true
+                }
+                self.collectionView.reloadSections(NSIndexSet(index: elapsedTime ) as IndexSet)
+            }
+        }
+        else{
+            if elapsedTime < 3*3600
+            {
+                let screenHeight = view.frame.size.height
+                    elapsedTime = elapsedTime*12/(3*3600)
+                    view.subviews[1].frame = CGRect( x: 0, y: (screenHeight * CGFloat(elapsedTime + 1 ) ) / 13, width: 1000, height: 10 )
+                
+
+                for itemsIndex in 0 ... 6{
+                    taskMatrix[elapsedTime - 1 ][itemsIndex].0 = true
+                }
+                self.collectionView.reloadSections(NSIndexSet(index: elapsedTime - 1 ) as IndexSet)
+            }
+        }
+        
+       // }
     }
-    */
+    
+    func getDateFromHour(hour: Int) -> Date {
+      let date = Date()
+      let calendar = Calendar.current
+      let componentsCurrent = calendar.dateComponents([.year, .month, .day], from: date)
+
+      var components = DateComponents()
+      components.hour = hour
+      components.minute = 0
+      components.second = 0
+      components.month = componentsCurrent.month
+      components.day = componentsCurrent.day
+      components.year = componentsCurrent.year
+      return calendar.date(from: components)!
+    }
 
 }
 
@@ -217,8 +621,17 @@ class LineView : UIView {
             context.setLineWidth(10)
             context.beginPath()
             context.move(to: CGPoint(x: 0.0, y: 00.0)) // This would be oldX, oldY
-            context.addLine(to: CGPoint(x: 1500.0, y: 0.0)) // This would be newX, newY
+            context.addLine(to: CGPoint(x: 150.0, y: 0.0)) // This would be newX, newY
             context.strokePath()
         }
     }
 }
+//class func pulse(view: UIView, sizeMultiplier: Float, duration: NSTimeInterval, repeatCount: Float = 1.0) {
+//    let pulseAnimation = CABasicAnimation(keyPath: "transform.scale")
+//    pulseAnimation.duration = duration
+//    pulseAnimation.toValue = NSNumber(float: sizeMultiplier)
+//    pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+//    pulseAnimation.autoreverses = true
+//    pulseAnimation.repeatCount = repeatCount
+//    view.layer.addAnimation(pulseAnimation, forKey: nil)
+//}
