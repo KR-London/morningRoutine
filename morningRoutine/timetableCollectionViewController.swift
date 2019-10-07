@@ -10,33 +10,26 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-let testing = true
+let testing = false
 
 class timetableCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var taskMatrix = Array(repeating: Array(repeating: (false, taskStatus.Open), count: 14), count: 13)
-
     var startingPoint : Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       // print(getDateFromHour(hour: 20))
         
         if testing == true{
               //startingPoint = DispatchTime.now()
             startingPoint = Date()
           }
         else{
-            startingPoint = getDateFromHour(hour: 10)
+            startingPoint = getDateFromHour(hour: 19)
         }
-       // let hour = calendar.component(.hour, from: date)
-       // let minutes = calendar.component(.minute, from: date)
-        
 
 
         let lineView = LineView(frame: CGRect( x: 0, y: view.frame.size.height/13, width: 10, height: 10) )
-       // self.view.frame.width
 
         //print(taskMatrix)
         view.addSubview(lineView)
@@ -51,30 +44,16 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     // MARK: UICollectionViewDataSource
-
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 13
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return 14
     }
-    
-
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
          let width = (self.view.frame.size.height) / 15//some width
@@ -190,7 +169,6 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
                    }
                }
             
-        
         if indexPath.row == 6{
                 if taskMatrix[indexPath.section][6].1 == taskStatus.Open
                 {
@@ -446,22 +424,14 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
                   cell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
                 }
         }
-//        if taskMatrix[indexPath.section][indexPath.row].0 == true  && cell.backgroundColor ==  #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1){
-//                    //cell.alpha = 0.2
-//                  cell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-//                }
-        
         
         if  taskMatrix[indexPath.section][indexPath.row].0 == true  && cell.backgroundColor ==  #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)  {
-                     //cell.alpha = 0.2
-        
-            //cell.alpha = 0.2
           cell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         }
         
         var elapsedTime = -Int(  startingPoint!.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate)
         
-        if indexPath.section < elapsedTime/(60*15) && cell.backgroundColor ==  #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        if indexPath.section < (elapsedTime/(60*15)+2) && cell.backgroundColor ==  #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
         {
             cell.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         }
@@ -507,51 +477,9 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
         }
     }
     
-    
-    
-    // MARK: UICollectionViewDelegate
-    
-    /*
-     // Uncomment this method to specify if the specified item should be highlighted during tracking
-     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment this method to specify if the specified item should be selected
-     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-     
-     }
-     */
-    
     //Update clock every second
     @objc func updateLine() {
-        // let now = Date()
-      //  var elapsedTime =  Int( (DispatchTime.now().uptimeNanoseconds -  startingPoint!.uptimeNanoseconds)/1000000000 )
-        
         var elapsedTime = -Int( startingPoint!.timeIntervalSince1970 - Date().timeIntervalSince1970 )
-      //  print(elapsedTime)
-        
-        // view.subvid
-        //let lineView = LineView(frame: CGRect( x: 0, y: 200, width: view.frame.size.width, height: view.frame.size.height ) )
-        //view.addSubview(lineView)
-        //
         if testing == true
         {
             if elapsedTime < 12
@@ -572,17 +500,15 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
             {
                 let screenHeight = view.frame.size.height
                     elapsedTime = elapsedTime*12/(3*3600)
-                    view.subviews[1].frame = CGRect( x: 0, y: (screenHeight * CGFloat(elapsedTime + 1 ) ) / 13, width: 1000, height: 10 )
-                
+                    print(elapsedTime)
+                    view.subviews[1].frame = CGRect( x: 0, y: (screenHeight * CGFloat(elapsedTime + 3 ) ) / 13, width: 1000, height: 10 )
 
-                for itemsIndex in 0 ... 6{
-                    taskMatrix[elapsedTime - 1 ][itemsIndex].0 = true
+                for itemsIndex in 0 ... 13{
+                    taskMatrix[elapsedTime][itemsIndex].0 = true
                 }
                 self.collectionView.reloadSections(NSIndexSet(index: elapsedTime - 1 ) as IndexSet)
             }
         }
-        
-       // }
     }
     
     func getDateFromHour(hour: Int) -> Date {
@@ -626,12 +552,4 @@ class LineView : UIView {
         }
     }
 }
-//class func pulse(view: UIView, sizeMultiplier: Float, duration: NSTimeInterval, repeatCount: Float = 1.0) {
-//    let pulseAnimation = CABasicAnimation(keyPath: "transform.scale")
-//    pulseAnimation.duration = duration
-//    pulseAnimation.toValue = NSNumber(float: sizeMultiplier)
-//    pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-//    pulseAnimation.autoreverses = true
-//    pulseAnimation.repeatCount = repeatCount
-//    view.layer.addAnimation(pulseAnimation, forKey: nil)
-//}
+
