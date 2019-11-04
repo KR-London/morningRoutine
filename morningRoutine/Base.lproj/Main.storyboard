@@ -1,72 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sTP-Fn-YTb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sTP-Fn-YTb">
     <device id="ipad10_5" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Timetable Collection View Controller-->
-        <scene sceneID="Xl3-5A-0ap">
+        <scene sceneID="Mxr-dV-YfY">
             <objects>
-                <collectionViewController id="Vac-r9-x3n" customClass="timetableCollectionViewController" customModule="morningRoutine" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="jTr-y5-HTh">
+                <collectionViewController id="5QJ-98-eTS" customClass="timetableCollectionViewController" customModule="morningRoutine" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="J1b-ZI-GlE">
                         <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5eQ-gb-pgq">
-                            <size key="itemSize" width="50" height="50"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GcP-Jq-WgF">
+                            <size key="itemSize" width="289" height="275"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Yg9-ve-tHb" customClass="timetableCollectionViewCell" customModule="morningRoutine" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="eIZ-g7-h8D" customClass="timetableCollectionViewCell" customModule="morningRoutine" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="289" height="275"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="v9l-lG-KdK">
+                                    <rect key="frame" x="0.0" y="0.0" width="289" height="275"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hhU-gp-9d9">
-                                            <rect key="frame" x="4" y="14.5" width="42" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="kH3-AG-Ifo"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A6A-ac-rP2">
+                                            <rect key="frame" x="8" y="15" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                </view>
-                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="hhU-gp-9d9" firstAttribute="leading" secondItem="Yg9-ve-tHb" secondAttribute="leading" constant="4" id="Llc-2e-eEs"/>
-                                    <constraint firstAttribute="trailing" secondItem="hhU-gp-9d9" secondAttribute="trailing" constant="4" id="lQP-u2-bEU"/>
-                                    <constraint firstItem="hhU-gp-9d9" firstAttribute="centerY" secondItem="Yg9-ve-tHb" secondAttribute="centerY" id="pqy-JI-fsc"/>
-                                </constraints>
-                                <size key="customSize" width="50" height="50"/>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="289" height="275"/>
                                 <connections>
-                                    <outlet property="label" destination="hhU-gp-9d9" id="NgV-R4-Hsk"/>
+                                    <outlet property="label" destination="A6A-ac-rP2" id="zf8-x3-WU6"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
-                            <outlet property="dataSource" destination="Vac-r9-x3n" id="s4u-0O-91L"/>
-                            <outlet property="delegate" destination="Vac-r9-x3n" id="fUy-VF-NfO"/>
+                            <outlet property="dataSource" destination="5QJ-98-eTS" id="YsJ-xU-O6E"/>
+                            <outlet property="delegate" destination="5QJ-98-eTS" id="nO3-wI-X1C"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="v99-bz-8ka"/>
+                    <navigationItem key="navigationItem" id="WUE-F7-8ut"/>
                     <connections>
-                        <segue destination="s4s-Mo-ErR" kind="show" identifier="list" id="BWe-AD-Aud"/>
-                        <segue destination="xjg-sj-9zz" kind="show" identifier="leave" id="VFN-iL-zQo"/>
+                        <segue destination="s4s-Mo-ErR" kind="show" identifier="list" id="LlB-O8-Ejt"/>
+                        <segue destination="xjg-sj-9zz" kind="showDetail" identifier="leave" id="z0h-eE-zjb"/>
                     </connections>
                 </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qzq-FR-2kK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d9D-g6-GAh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-453" y="-619"/>
+            <point key="canvasLocation" x="-1239.388489208633" y="-1187.0503597122304"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZPJ-Tj-zfQ">
@@ -78,12 +71,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="Vac-r9-x3n" kind="relationship" relationship="rootViewController" id="RYr-IF-AbA"/>
+                        <segue destination="5QJ-98-eTS" kind="relationship" relationship="rootViewController" id="Bbs-zM-qS4"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FGE-iZ-doH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1376" y="-53"/>
+            <point key="canvasLocation" x="-1590" y="-135"/>
         </scene>
         <!--Packing List View Controller-->
         <scene sceneID="aLw-vD-b0W">
@@ -132,11 +125,11 @@
             <objects>
                 <viewController id="xjg-sj-9zz" customClass="funnyAnimalViewController" customModule="morningRoutine" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LGw-oq-5rC">
-                        <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="712" height="794"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="funny.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="TaR-HL-Rfh">
-                                <rect key="frame" x="0.0" y="50" width="1112" height="784"/>
+                                <rect key="frame" x="0.0" y="0.0" width="712" height="794"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
