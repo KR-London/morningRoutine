@@ -17,11 +17,15 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
     var taskMatrix = Array(repeating: Array(repeating: (false, taskStatus.Open), count: 14), count: 13)
 
     var startingPoint : Date?
+    
+     unowned var myNav : UINavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
        // print(getDateFromHour(hour: 20))
+        
+        setUpNavigationBarItems()
         
         if testing == true{
               //startingPoint = DispatchTime.now()
@@ -507,6 +511,26 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
         }
     }
     
+    
+        func setUpNavigationBarItems(){
+            navigationItem.title = "Nag-O-Matic"
+
+            let navBarHeight = navigationController?.navigationBar.frame.height
+           
+            let weatherButton = UIButton(type: .system)
+            weatherButton.setImage(UIImage(named:"sun.jpg" )?.resize(to: CGSize(width: (36/53)*0.7*(navBarHeight ?? 100),height: 0.7*(navBarHeight ?? 100) )), for: .normal)
+
+            //shareButton.addTarget(self, action: #selector(share), for: .touchUpInside)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: weatherButton)
+            
+    //        let statsButton = UIButton(type: .system)
+    //       // statsButton.setImage(UIImage(named: "appleHistory")?.resize(to: CGSize(width: 0.55*(navBarHeight ?? 100),height: 0.55*(navBarHeight ?? 100) )), for: .normal)
+    //        statsButton.addTarget(self, action: #selector(goStats), for: .touchUpInside)
+    //        statsButton.titleLabel?.text = "Stats"
+    //        //statsButton.titleLabel?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    //        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: statsButton)
+            
+        }
     
     
     // MARK: UICollectionViewDelegate
