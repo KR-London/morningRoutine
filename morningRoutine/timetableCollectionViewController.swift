@@ -7,12 +7,20 @@
 //
 
 import UIKit
-
+import CoreLocation
 private let reuseIdentifier = "Cell"
 
 let testing = true
 
-class timetableCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class timetableCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
+    
+    //Constants
+    let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
+    let APP_ID = "c2b380f85b27464a398cc982d4fba1c5"
+    
+    //TODO: declare instance variable s
+    
+    let locationManger = CLLocationManager()
     
     var taskMatrix = Array(repeating: Array(repeating: (false, taskStatus.Open), count: 14), count: 13)
 
@@ -24,6 +32,14 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
         super.viewDidLoad()
         
        // print(getDateFromHour(hour: 20))
+        
+        //TODO: set up location manager
+        
+        locationManger.delegate = self
+        locationManger.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManger.requestWhenInUseAuthorization()
+        locationManger.startUpdatingLocation()
+        
         
         setUpNavigationBarItems()
         
@@ -532,6 +548,25 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
             
         }
     
+    // MARK: Wether location manager delegate
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[locations.count - 1]
+        if location.horizontalAccuracy > 0 {
+            locationManger.stopUpdatingLocation()
+            print("longitude =")
+            print(location.coordinate.longitude)
+            
+            let latitude = String(location.coordinate.latitude)
+            let longitude = String(location.coordinate.longitude)
+            
+            let parans : [String: String] = ["lat" : latitude, "lon": longitude, "appid": APP_ID]
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
     
     // MARK: UICollectionViewDelegate
     
@@ -623,6 +658,10 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
       components.year = componentsCurrent.year
       return calendar.date(from: components)!
     }
+    
+    
+    
+    
 
 }
 
