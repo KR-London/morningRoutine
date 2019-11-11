@@ -36,7 +36,7 @@ class timetableCollectionViewCell: UICollectionViewCell {
     
     func wobble(){
       //  UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: { self.transform = self.transform.scaledBy(x: 0.75, y: 0.75)}, completion: nil)
-        pulse( view: self.contentView, sizeMultiplier: 2.0, duration: 0.2, repeatCount: 100)
+        pulse( view: self.contentView, sizeMultiplier: 2.0, duration: 0.2, repeatCount: 1000)
        // pulse( view: (self.inputView)!, sizeMultiplier: 2.0, duration: 0.2, repeatCount: 100)
         
     }

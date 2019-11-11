@@ -11,6 +11,10 @@
 		4408A70D23709BF70023CFBD /* timetableCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4408A70C23709BF70023CFBD /* timetableCollectionViewController.swift */; };
 		4408A70F2370C3770023CFBD /* sun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4408A70E2370C3770023CFBD /* sun.jpg */; };
 		4408A7112370C3F10023CFBD /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4408A7102370C3F10023CFBD /* extensions.swift */; };
+		4408A7132372A1360023CFBD /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4408A7122372A1350023CFBD /* WeatherDataModel.swift */; };
+		4408A7152372EC1B0023CFBD /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4408A7142372EC1B0023CFBD /* WeatherData.swift */; };
+		4408A7172372EFD90023CFBD /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4408A7162372EFD90023CFBD /* WeatherModel.swift */; };
+		4408A7192372F1EA0023CFBD /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4408A7182372F1EA0023CFBD /* WeatherManager.swift */; };
 		445C94CD234290C20082D84A /* funnyAnimalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C94CC234290C20082D84A /* funnyAnimalViewController.swift */; };
 		44943F46234216DD005C70F5 /* GoogleService-Info-3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44943F45234216DD005C70F5 /* GoogleService-Info-3.plist */; };
 		44943F4A23422A52005C70F5 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44943F4923422A52005C70F5 /* File.swift */; };
@@ -28,6 +32,10 @@
 		4408A70C23709BF70023CFBD /* timetableCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = timetableCollectionViewController.swift; path = /Users/kate/Desktop/morningRoutine/morningRoutine/timetableCollectionViewController.swift; sourceTree = "<absolute>"; };
 		4408A70E2370C3770023CFBD /* sun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun.jpg; sourceTree = "<group>"; };
 		4408A7102370C3F10023CFBD /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		4408A7122372A1350023CFBD /* WeatherDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
+		4408A7142372EC1B0023CFBD /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		4408A7162372EFD90023CFBD /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		4408A7182372F1EA0023CFBD /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 		445C94CC234290C20082D84A /* funnyAnimalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = funnyAnimalViewController.swift; sourceTree = "<group>"; };
 		44943F45234216DD005C70F5 /* GoogleService-Info-3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-3.plist"; sourceTree = "<group>"; };
 		44943F4923422A52005C70F5 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -92,8 +100,12 @@
 				449EE1EC233CE9D9007134AA /* AppDelegate.swift */,
 				449EE1EE233CE9D9007134AA /* SceneDelegate.swift */,
 				449EE1F2233CE9D9007134AA /* Main.storyboard */,
+				4408A7122372A1350023CFBD /* WeatherDataModel.swift */,
 				44A4B89923437DD7003F9EBB /* packingListViewController.swift */,
 				4408A70C23709BF70023CFBD /* timetableCollectionViewController.swift */,
+				4408A7182372F1EA0023CFBD /* WeatherManager.swift */,
+				4408A7162372EFD90023CFBD /* WeatherModel.swift */,
+				4408A7142372EC1B0023CFBD /* WeatherData.swift */,
 				4408A7102370C3F10023CFBD /* extensions.swift */,
 				449EE200233CEA09007134AA /* timetableCollectionViewCell.swift */,
 				445C94CC234290C20082D84A /* funnyAnimalViewController.swift */,
@@ -240,9 +252,13 @@
 				4408A70D23709BF70023CFBD /* timetableCollectionViewController.swift in Sources */,
 				4408A7112370C3F10023CFBD /* extensions.swift in Sources */,
 				449EE201233CEA09007134AA /* timetableCollectionViewCell.swift in Sources */,
+				4408A7132372A1360023CFBD /* WeatherDataModel.swift in Sources */,
+				4408A7192372F1EA0023CFBD /* WeatherManager.swift in Sources */,
+				4408A7152372EC1B0023CFBD /* WeatherData.swift in Sources */,
 				445C94CD234290C20082D84A /* funnyAnimalViewController.swift in Sources */,
 				44A4B89A23437DD7003F9EBB /* packingListViewController.swift in Sources */,
 				449EE1EF233CE9D9007134AA /* SceneDelegate.swift in Sources */,
+				4408A7172372EFD90023CFBD /* WeatherModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,7 +406,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2E5MDC86ME;
 				INFOPLIST_FILE = morningRoutine/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -410,7 +426,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2E5MDC86ME;
 				INFOPLIST_FILE = morningRoutine/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -9,8 +9,10 @@
 import UIKit
 import CoreLocation
 private let reuseIdentifier = "Cell"
+import Alamofire
+import SwiftyJSON
 
-let testing = true
+let testing = false
 
 class timetableCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
     
@@ -21,6 +23,8 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
     //TODO: declare instance variable s
     
     let locationManger = CLLocationManager()
+    let weatherDataModel = WeatherDataModel()
+    var weatherManager = WeatherManager()
     
     var taskMatrix = Array(repeating: Array(repeating: (false, taskStatus.Open), count: 14), count: 13)
 
@@ -40,15 +44,17 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
         locationManger.requestWhenInUseAuthorization()
         locationManger.startUpdatingLocation()
         
-        
-        setUpNavigationBarItems()
+        weatherManager.delegate = self as! WeatherManagerDelegate
+        weatherManager.fetchWeather(cityName: "Watford")
+        //// city ID is 2634677
+      //  setUpNavigationBarItems()
         
         if testing == true{
               //startingPoint = DispatchTime.now()
             startingPoint = Date()
           }
         else{
-            startingPoint = getDateFromHour(hour: 10)
+            startingPoint = getDateFromHour(hour: 12)
         }
        // let hour = calendar.component(.hour, from: date)
        // let minutes = calendar.component(.minute, from: date)
@@ -67,6 +73,7 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
             Timer.scheduledTimer(timeInterval: 1, target: self, selector: "updateLine", userInfo: nil, repeats: true)
         }
         else{
+            updateLine()
             Timer.scheduledTimer(timeInterval: 60, target: self, selector: "updateLine", userInfo: nil, repeats: true)
         }
     }
@@ -97,8 +104,8 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         let width = (self.view.frame.size.height) / 15//some width
-        let height = (self.view.frame.size.width) / 18
+         let width = (self.view.frame.size.height  ) / 15//some width
+        let height = (self.view.frame.size.width -  (navigationController?.navigationBar.frame.height ?? 0 ) ) / 18
                return CGSize(width: width, height: height)
     }
 
@@ -394,14 +401,14 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
                             case 1: cell.label.text = " "
                             case 2: cell.label.text = " "
                             case 3: cell.label.text = " "
-                            case 4: cell.label.text = "Wake Up"
-                            case 5: cell.label.text = "Eat"
-                            case 6: cell.label.text = "Eat"
-                            case 7: cell.label.text = "Dress"
-                            case 8: cell.label.text = " Read"
-                            case 9: cell.label.text = " Teeth "
-                            case 10: cell.label.text = " Hair "
-                            case 11: cell.label.text = "Leave"
+                            case 4: cell.label.text = " "
+                            case 5: cell.label.text = ""
+                            case 6: cell.label.text = ""
+                            case 7: cell.label.text = " Hair"
+                            case 8: cell.label.text = " Eat"
+                            case 9: cell.label.text = " Eat"
+                            case 10: cell.label.text = " Dress "
+                            case 11: cell.label.text = " Read"
                             case 12: cell.label.text = " "
                             default: cell.label.text = "Cass"
                              cell.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
@@ -425,11 +432,11 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
                              case 4: cell.label.text = " "
                              case 5: cell.label.text = " "
                              case 6: cell.label.text = " "
-                             case 7: cell.label.text = " "
-                             case 8: cell.label.text = " "
-                             case 9: cell.label.text = " "
-                             case 10: cell.label.text = " "
-                             case 11: cell.label.text = " "
+                             case 7: cell.label.text = "Wake Up"
+                             case 8: cell.label.text = "Eat"
+                             case 9: cell.label.text =  " Dress "
+                             case 10: cell.label.text = "Socks & shoes"
+                             case 11: cell.label.text =  "Leave"
                              case 12: cell.label.text = " "
                              default: cell.label.text = "Cass"
                               cell.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
@@ -528,13 +535,23 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
     }
     
     
-        func setUpNavigationBarItems(){
-            navigationItem.title = "Nag-O-Matic"
+    func setUpNavigationBarItems(weather: WeatherModel){
+        navigationItem.title = "Nag-O-Matic"
+            //weather.cityName
+        //
 
             let navBarHeight = navigationController?.navigationBar.frame.height
            
             let weatherButton = UIButton(type: .system)
-            weatherButton.setImage(UIImage(named:"sun.jpg" )?.resize(to: CGSize(width: (36/53)*0.7*(navBarHeight ?? 100),height: 0.7*(navBarHeight ?? 100) )), for: .normal)
+            if #available(iOS 13.0, *) {
+                weatherButton.setImage( UIImage(systemName: weather.conditionName ), for: .normal)
+            } else {
+               navigationItem.title = weather.conditionName
+            }
+        
+          //  let weatherIcon = UIImageView()
+           // weatherIcon.image = UIImage(systemName: weather.conditionName )
+            //weatherButton.setImage(UIImage(named:"sun.jpg" )?.resize(to: CGSize(width: (36/53)*0.7*(navBarHeight ?? 100),height: 0.7*(navBarHeight ?? 100) )), for: .normal)
 
             //shareButton.addTarget(self, action: #selector(share), for: .touchUpInside)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: weatherButton)
@@ -548,6 +565,73 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
             
         }
     
+    
+    //MARK: Networking
+    
+    func getWeatherData(url: String, parameters: [String: String]){
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON{
+            response in
+            if response.result.isSuccess{
+               // print("Got weather data")
+                
+              //  let weatherJSON : JSON = response.result.value! as! JSON
+                
+              let weatherJSON : JSON = JSON(response.result.value!)
+                self.updateWeatherData(json: weatherJSON)
+             
+               // print(weatherJSON)
+                //self.parseJSON(weatherData: weatherJSON)
+                
+            }else{
+                print(response.result.error)
+            }
+        }
+    }
+    
+    //MARK: JSON parsing
+    
+    func updateWeatherData(json: JSON){
+        let tempResult = json["main"]["temp"].double
+        weatherDataModel.temperature = Int(tempResult!) - Int(273.15)
+       // WeatherDataModel.c
+    }
+    
+    func parseJSON(weatherData: Data){
+        let decoder = JSONDecoder()
+        do{
+            let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
+            let id = decodedData.weather[0].id
+            let iconFilename = getConditionName(weatherID: id)
+            print(iconFilename)
+            
+            print(iconFilename)
+        }
+            catch{
+                print(error)
+            }
+        }
+    
+    func getConditionName(weatherID: Int) -> String{
+        switch weatherID{
+            case 200...232:
+                return "cloud.bolt"
+            case 300...321:
+                return "cloud.drizzle"
+            case 500...531:
+                return "cloud.rain"
+            case 600...622:
+                return "cloud.snow"
+            case 701...781:
+                return "cloud.fog"
+            case 800:
+                return "sun.max"
+            //case 801...804:
+              ///  return "cloud.bolt"
+            default:
+                return "cloud"
+        }
+    }
+    
     // MARK: Wether location manager delegate
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -560,7 +644,9 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
             let latitude = String(location.coordinate.latitude)
             let longitude = String(location.coordinate.longitude)
             
-            let parans : [String: String] = ["lat" : latitude, "lon": longitude, "appid": APP_ID]
+            let params : [String: String] = ["lat" : latitude, "lon": longitude, "appid": APP_ID]
+            
+            getWeatherData(url: WEATHER_URL, parameters: params)
         }
     }
     
@@ -629,15 +715,22 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
         else{
             if elapsedTime < 3*3600
             {
+              
                 let screenHeight = view.frame.size.height
                     elapsedTime = elapsedTime*12/(3*3600)
-                    view.subviews[1].frame = CGRect( x: 0, y: (screenHeight * CGFloat(elapsedTime + 1 ) ) / 13, width: 1000, height: 10 )
+                    print(elapsedTime)
+                let offset = navigationController?.navigationBar.frame.height
+                print(offset)
+                view.subviews[1].frame = CGRect( x: 0, y: (screenHeight * CGFloat(elapsedTime + 2 )  ) / 12 + (offset ?? 0 ) - 25 , width: 1000, height: 10 )
                 
 
-                for itemsIndex in 0 ... 6{
-                    taskMatrix[elapsedTime - 1 ][itemsIndex].0 = true
+                for itemsIndex in 0 ... 13{
+                    taskMatrix[elapsedTime ][itemsIndex].0 = true
                 }
-                self.collectionView.reloadSections(NSIndexSet(index: elapsedTime - 1 ) as IndexSet)
+                for x in 1 ... elapsedTime{
+                     self.collectionView.reloadSections(NSIndexSet(index: elapsedTime - x ) as IndexSet)
+                }
+               
             }
         }
         
@@ -665,6 +758,38 @@ class timetableCollectionViewController: UICollectionViewController, UICollectio
 
 }
 
+extension timetableCollectionViewController: WeatherManagerDelegate {
+    func didUpdateWeather(weather: WeatherModel) {
+              DispatchQueue.main.async {
+            //  self.temperatureLabel.text = weather.temperatureString
+           //   self.conditionImageView.image = UIImage(systemName: weather.conditionName)
+              ///self.cityLabel.text = weather.cityName
+              //self.
+              print("The icon that I would show is...")
+                print(weather.conditionName)
+                
+                self.setUpNavigationBarItems(weather: weather)
+        
+          }
+    }
+    
+    
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherDataModel) {
+        DispatchQueue.main.async {
+          //  self.temperatureLabel.text = weather.temperatureString
+         //   self.conditionImageView.image = UIImage(systemName: weather.conditionName)
+            ///self.cityLabel.text = weather.cityName
+            //self.
+            print("The icon that I would show is...")
+            print(weather.weatherIconName)
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error)
+    }
+}
+
 class LineView : UIView {
 
     var position = 0.0
@@ -684,7 +809,7 @@ class LineView : UIView {
             context.setLineWidth(10)
             context.beginPath()
             context.move(to: CGPoint(x: 0.0, y: 00.0)) // This would be oldX, oldY
-            context.addLine(to: CGPoint(x: 150.0, y: 0.0)) // This would be newX, newY
+            context.addLine(to: CGPoint(x: 15000.0, y: 0.0)) // This would be newX, newY
             context.strokePath()
         }
     }
